@@ -41,9 +41,10 @@ Purpose:  This project continues developing Project3.
 struct BurgerShack
 {
     int numBurgersServedPerDay, numToppingOptions, daysSinceGreaseTrapCleaned;
-    float profitPerWeek { 745.32f }, beefUsedPerWeek { 47.5f };
+    float profitPerWeek, beefUsedPerWeek;
     
     BurgerShack();
+    BurgerShack(int numDailyBurgersServed, float weeklyProfit, float weeklyBeefUsed);
     ~BurgerShack();
 
     struct Customer
@@ -70,9 +71,17 @@ struct BurgerShack
 };
 
 // BurgerShack implementations
-BurgerShack::BurgerShack() : numBurgersServedPerDay(576), numToppingOptions(12)
+BurgerShack::BurgerShack() : 
+numBurgersServedPerDay(576), numToppingOptions(12), profitPerWeek(745.32f), beefUsedPerWeek(47.5f)
 {
     daysSinceGreaseTrapCleaned = 2;
+}
+
+BurgerShack::BurgerShack(int numDailyBurgersServed, float weeklyProfit, float weeklyBeefUsed) :
+numBurgersServedPerDay(numDailyBurgersServed), profitPerWeek(weeklyProfit), beefUsedPerWeek(weeklyBeefUsed)
+{
+    daysSinceGreaseTrapCleaned = 0;
+    numToppingOptions = 12;
 }
 
 BurgerShack::~BurgerShack()
@@ -167,6 +176,7 @@ struct FishingTrawler
     float amountOfFishCaughtPerDay, amountOfGasRemaining, distanceTraveledPerWeek;
 
     FishingTrawler();
+    FishingTrawler(int numNets, int numCrew, float fishCaughtPerDay);
     ~FishingTrawler();
 
     void pullInNet(int netId);
@@ -179,6 +189,13 @@ struct FishingTrawler
 FishingTrawler::FishingTrawler() : numFishingNets(5), numCrewMembers(4), amountOfFishCaughtPerDay(323.4f)
 {
     amountOfGasRemaining = 25.4f;
+    distanceTraveledPerWeek = 134.3f;
+}
+
+FishingTrawler::FishingTrawler(int numNets, int numCrew, float fishCaughtPerDay) :
+numFishingNets(numNets), numCrewMembers(numCrew), amountOfFishCaughtPerDay(fishCaughtPerDay)
+{
+    amountOfGasRemaining = 150.f;
     distanceTraveledPerWeek = 134.3f;
 }
 
@@ -304,11 +321,116 @@ void SteamLocomotive::removeCarsFromTrain(int numCarsToRemove)
  new UDT 4:
  with 2 member functions
 */
+struct BurgerChain
+{
+    BurgerShack franchisedBurgerShack1{ 436, 623.12f, 40.5f };
+    BurgerShack franchisedBurgerShack2{ 476, 712.23f, 56.21f };
+    BurgerShack franchisedBurgerShack3{ 643, 924.82f, 75.64f };
+
+    BurgerChain();
+    ~BurgerChain();
+
+    float tallyWeeklyProfits();
+    void addNewToppingOption(int numToppingsToAdd);
+};
+
+BurgerChain::BurgerChain()
+{
+    std::cout << "-->CTOR: BurgerChain\n";
+    float totalWeeklyBeefNeeded = franchisedBurgerShack1.beefUsedPerWeek + franchisedBurgerShack2.beefUsedPerWeek + franchisedBurgerShack3.beefUsedPerWeek;
+    std::cout << "Expected amount of beef needed this week: " << totalWeeklyBeefNeeded << "lbs.\n\n";
+}
+
+BurgerChain::~BurgerChain()
+{
+    std::cout << "-->DTOR: BurgerChain\n";
+    franchisedBurgerShack1.cleanGrill(true);
+    franchisedBurgerShack2.cleanGrill(true);
+    franchisedBurgerShack3.cleanGrill(true);
+}
+
+float BurgerChain::tallyWeeklyProfits()
+{
+    float totalWeeklyProfit = 0.f;
+
+    totalWeeklyProfit += franchisedBurgerShack1.profitPerWeek;
+    totalWeeklyProfit += franchisedBurgerShack2.profitPerWeek;
+    totalWeeklyProfit += franchisedBurgerShack3.profitPerWeek;
+
+    return totalWeeklyProfit;
+}
+
+void BurgerChain::addNewToppingOption(int numToppingsToAdd = 1)
+{
+    franchisedBurgerShack1.numToppingOptions += numToppingsToAdd;
+    franchisedBurgerShack2.numToppingOptions += numToppingsToAdd;
+    franchisedBurgerShack3.numToppingOptions += numToppingsToAdd;
+
+    std::cout << "Updated number of toppings available to " << franchisedBurgerShack1.numToppingOptions << std::endl;
+}
 
 /*
  new UDT 5:
  with 2 member functions
 */
+struct FishingFleet
+{
+    FishingTrawler trawler1{ 4, 3, 294.2f };
+    FishingTrawler trawler2{ 6, 5, 423.4f };
+    FishingTrawler trawler3;
+
+    FishingFleet();
+    ~FishingFleet();
+
+    float calculateTotalWeeklyFishCaughtAmount();
+    void sailFleet(int numDaysToSailFor);
+};
+
+FishingFleet::FishingFleet()
+{
+    std::cout << "-->CTOR: FishingFleet\n";
+
+    if (trawler1.amountOfGasRemaining < 150.f)
+        std::cout << "Trawler 1 needs fuel before leaving port...\n";
+
+    if (trawler2.amountOfGasRemaining < 150.f)
+        std::cout << "Trawler 2 needs fuel before leaving port...\n";
+    
+    if (trawler3.amountOfGasRemaining < 150.f)
+        std::cout << "Trawler 3 needs fuel before leaving port...\n";
+
+    std::cout << "\n";
+}
+
+FishingFleet::~FishingFleet()
+{
+    std::cout << "-->DTOR: FishingFleet\n";
+    trawler1.cleanBarnaclesFromHull(false);
+    trawler2.cleanBarnaclesFromHull(false);
+    trawler3.cleanBarnaclesFromHull(false);
+}
+
+float FishingFleet::calculateTotalWeeklyFishCaughtAmount()
+{
+    float totalAmountWeeklyFishCaught = 0.f;
+
+    totalAmountWeeklyFishCaught += trawler1.amountOfFishCaughtPerDay * 7.f;
+    totalAmountWeeklyFishCaught += trawler2.amountOfFishCaughtPerDay * 7.f;
+    totalAmountWeeklyFishCaught += trawler3.amountOfFishCaughtPerDay * 7.f;
+
+    return totalAmountWeeklyFishCaught;
+}
+
+void FishingFleet::sailFleet(int numDaysToSailFor)
+{
+    std::cout << "Putting the fishing fleet to sea...\n";
+    trawler1.setSailForNumDays(numDaysToSailFor);
+    std::cout << trawler1.amountOfGasRemaining << " gallons of fuel remaining.\n\n";
+    trawler2.setSailForNumDays(numDaysToSailFor);
+    std::cout << trawler2.amountOfGasRemaining << " gallons of fuel remaining.\n\n";
+    trawler3.setSailForNumDays(numDaysToSailFor);
+    std::cout << trawler3.amountOfGasRemaining << " gallons of fuel remaining.\n\n";
+}
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
@@ -336,21 +458,17 @@ void printDivider(int numToPrint = 1)
 int main()
 {
     /*
-     Part3-3: UDT instantiations
+     Task 5.1-6: UDT instantiations from Project 3
     */
     BurgerShack firstBurgerShack;
     BurgerShack secondBurgerShack;
-
     FishingTrawler trawler1;
     FishingTrawler trawler2;
-
     SteamLocomotive transCanada;
     SteamLocomotive localService;
 
-    /*
-     Part 3-4: calling member functions
-    */
-    std::cout << "PART 3-4\n";
+    // calling member functions
+    std::cout << "TASK 3.3-4\n";
     firstBurgerShack.cleanGrill(true);
     printDivider();
     trawler1.pullInNet(4);
@@ -358,10 +476,8 @@ int main()
     localService.addCoalToFurnace(32.3f);
     printDivider();
 
-    /*
-     Part 3-5: print member variables/return values
-    */
-    std::cout << "PART 3-5\n";
+    // print member variables/return values
+    std::cout << "TASK 3.3-5\n";
     std::cout << "The first burger shack serves " << firstBurgerShack.numBurgersServedPerDay << " burgers each day.\n"; 
     printDivider();
     std::cout << "The second trawler has " << trawler2.amountOfGasRemaining << " gallons of fuel remaining.\n";
@@ -369,10 +485,8 @@ int main()
     std::cout << "The Local Service is " << localService.age << " years old.\n";
     printDivider();
     
-    /*
-     PART 5-3&4: calls to looping member functions
-    */
-    std::cout << "PART 5-4\n";
+    // calls to looping member functions
+    std::cout << "TASK 3.5-4\n";
     std::cout << "Is it time to clean the grease trap?\n" << (firstBurgerShack.isItTimeToCleanTheGreaseTrap(6, 5) ? "YES" : "NO") << ": it has been " << firstBurgerShack.daysSinceGreaseTrapCleaned << " days.\n";
     printDivider();
     trawler2.setSailForNumDays(5);
@@ -380,9 +494,22 @@ int main()
     printDivider();
     localService.removeCarsFromTrain(5);
     std::cout << "There are " << localService.numCarsOnTrain << " cars on this train.\n";
+    printDivider(3);
+
+    /*
+     Task 5.1-7: Instantiate new UDTs and call member functions
+    */
+    std::cout << "TASK 5.1-7\n";
+    BurgerChain familyBurger;
+    std::cout << "Total weekly profit of this Burger Chain is: $" << familyBurger.tallyWeeklyProfits() << std::endl;
+    familyBurger.addNewToppingOption(3);
     printDivider();
 
+    FishingFleet pacificCatch;
+    std::cout << "Total amount of fish caught per week: " << pacificCatch.calculateTotalWeeklyFishCaughtAmount() << "lbs.\n";
+    pacificCatch.sailFleet(4);
 
+    printDivider();
     std::cout << "good to go!" << std::endl;
     printDivider();
 }
