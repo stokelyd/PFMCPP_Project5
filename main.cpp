@@ -335,5 +335,54 @@ void printDivider(int numToPrint = 1)
 
 int main()
 {
+    /*
+     Part3-3: UDT instantiations
+    */
+    BurgerShack firstBurgerShack;
+    BurgerShack secondBurgerShack;
+
+    FishingTrawler trawler1;
+    FishingTrawler trawler2;
+
+    SteamLocomotive transCanada;
+    SteamLocomotive localService;
+
+    /*
+     Part 3-4: calling member functions
+    */
+    std::cout << "PART 3-4\n";
+    firstBurgerShack.cleanGrill(true);
+    printDivider();
+    trawler1.pullInNet(4);
+    printDivider();
+    localService.addCoalToFurnace(32.3f);
+    printDivider();
+
+    /*
+     Part 3-5: print member variables/return values
+    */
+    std::cout << "PART 3-5\n";
+    std::cout << "The first burger shack serves " << firstBurgerShack.numBurgersServedPerDay << " burgers each day.\n"; 
+    printDivider();
+    std::cout << "The second trawler has " << trawler2.amountOfGasRemaining << " gallons of fuel remaining.\n";
+    printDivider();
+    std::cout << "The Local Service is " << localService.age << " years old.\n";
+    printDivider();
+    
+    /*
+     PART 5-3&4: calls to looping member functions
+    */
+    std::cout << "PART 5-4\n";
+    std::cout << "Is it time to clean the grease trap?\n" << (firstBurgerShack.isItTimeToCleanTheGreaseTrap(6, 5) ? "YES" : "NO") << ": it has been " << firstBurgerShack.daysSinceGreaseTrapCleaned << " days.\n";
+    printDivider();
+    trawler2.setSailForNumDays(5);
+    std::cout << "Fuel remaining: " << trawler2.amountOfGasRemaining << " gallons.\n";
+    printDivider();
+    localService.removeCarsFromTrain(5);
+    std::cout << "There are " << localService.numCarsOnTrain << " cars on this train.\n";
+    printDivider();
+
+
     std::cout << "good to go!" << std::endl;
+    printDivider();
 }
