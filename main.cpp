@@ -44,6 +44,7 @@ struct BurgerShack
     float profitPerWeek { 745.32f }, beefUsedPerWeek { 47.5f };
     
     BurgerShack();
+    ~BurgerShack();
 
     struct Customer
     {
@@ -68,9 +69,15 @@ struct BurgerShack
     Customer nextCustomerInLine;
 };
 
+// BurgerShack implementations
 BurgerShack::BurgerShack() : numBurgersServedPerDay(576), numToppingOptions(12)
 {
     daysSinceGreaseTrapCleaned = 2;
+}
+
+BurgerShack::~BurgerShack()
+{
+    std::cout << "---->DTOR: BurgerShack\n";
 }
 
 void BurgerShack::serveBurger(Customer customer, bool withFries)
@@ -101,6 +108,26 @@ void BurgerShack::cleanGrill(bool extraMessToClean)
     }
 }
 
+bool BurgerShack::isItTimeToCleanTheGreaseTrap(int cleaningThreshold, int numDaysElapsed)
+{
+    int currentGreaseTrapStatus = daysSinceGreaseTrapCleaned;
+
+    while (currentGreaseTrapStatus < cleaningThreshold)
+    {
+        currentGreaseTrapStatus++;
+
+        if (currentGreaseTrapStatus >= cleaningThreshold)
+        {
+            daysSinceGreaseTrapCleaned += numDaysElapsed;
+            return true;
+        }
+    }
+
+    daysSinceGreaseTrapCleaned += numDaysElapsed;
+    return false;    
+}
+
+// Customer implementations
 BurgerShack::Customer::Customer() : customerNumber(27)
 {
     tipPercentage = 0.15f;
@@ -129,25 +156,6 @@ void BurgerShack::Customer::getExtraNapkins(int numNapkins)
     std::cout << "Got " << numNapkins << " extra napkins" << std::endl;
 }
 
-bool BurgerShack::isItTimeToCleanTheGreaseTrap(int cleaningThreshold, int numDaysElapsed)
-{
-    int currentGreaseTrapStatus = daysSinceGreaseTrapCleaned;
-
-    while (currentGreaseTrapStatus < cleaningThreshold)
-    {
-        currentGreaseTrapStatus++;
-
-        if (currentGreaseTrapStatus >= cleaningThreshold)
-        {
-            daysSinceGreaseTrapCleaned += numDaysElapsed;
-            return true;
-        }
-    }
-
-    daysSinceGreaseTrapCleaned += numDaysElapsed;
-    return false;    
-}
-
 
 
 /*
@@ -159,6 +167,7 @@ struct FishingTrawler
     float amountOfFishCaughtPerDay, amountOfGasRemaining, distanceTraveledPerWeek;
 
     FishingTrawler();
+    ~FishingTrawler();
 
     void pullInNet(int netId);
     void turnToPort(int degrees);
@@ -171,6 +180,11 @@ FishingTrawler::FishingTrawler() : numFishingNets(5), numCrewMembers(4), amountO
 {
     amountOfGasRemaining = 25.4f;
     distanceTraveledPerWeek = 134.3f;
+}
+
+FishingTrawler::~FishingTrawler()
+{
+    std::cout << "---->DTOR: FishingTrawler\n";
 }
 
 void FishingTrawler::pullInNet(int netId)
@@ -227,6 +241,7 @@ struct SteamLocomotive
     float amountOfCoalUsedPerDay { 7.5f };
 
     SteamLocomotive();
+    ~SteamLocomotive();
 
     void detachFromCurrentTrainCar(bool warnCrew);
     void addCoalToFurnace(float lbsCoalToAdd);
@@ -241,6 +256,10 @@ SteamLocomotive::SteamLocomotive() : numCarsOnTrain(15), age(25)
     numCrewMembers = 2;
 }
 
+SteamLocomotive::~SteamLocomotive()
+{
+    std::cout << "---->DTOR: SteamLocomotive\n";
+}
 
 void SteamLocomotive::detachFromCurrentTrainCar(bool warnCrew)
 {
@@ -306,6 +325,14 @@ void SteamLocomotive::removeCarsFromTrain(int numCarsToRemove)
  */
 
 #include <iostream>
+void printDivider(int numToPrint = 1)
+{
+    for (int i = 0; i < numToPrint; ++i)
+    {
+        std::cout << "-----------------------------------------------\n"; 
+    }
+}
+
 int main()
 {
     std::cout << "good to go!" << std::endl;
