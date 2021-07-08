@@ -99,8 +99,10 @@ struct BurgerShack
     void serveBurger(Customer customer, bool withFries);
     float chargeCustomer(Customer customer, float discountPercentage);
     void cleanGrill(bool extraMessToClean);
-
     bool isItTimeToCleanTheGreaseTrap(int cleaningThreshold, int numDaysElapsed = 7);
+
+    void printNumBurgersServedPerDay();
+    void printIsItTimeToCleanTheGreaseTrap(int cleaningThreshold, int numDaysElapsed = 7);
 
     Customer nextCustomerInLine;
 };
@@ -154,22 +156,26 @@ void BurgerShack::cleanGrill(bool extraMessToClean)
 
 bool BurgerShack::isItTimeToCleanTheGreaseTrap(int cleaningThreshold, int numDaysElapsed)
 {
-    int currentGreaseTrapStatus = daysSinceGreaseTrapCleaned;
-
-    while (currentGreaseTrapStatus < cleaningThreshold)
-    {
-        currentGreaseTrapStatus++;
-
-        if (currentGreaseTrapStatus >= cleaningThreshold)
-        {
-            daysSinceGreaseTrapCleaned += numDaysElapsed;
-            return true;
-        }
-    }
-
+    int currentGreaseTrapStatus = daysSinceGreaseTrapCleaned + numDaysElapsed;
     daysSinceGreaseTrapCleaned += numDaysElapsed;
+
+    if (currentGreaseTrapStatus >= cleaningThreshold)
+    {
+        return true;
+    }
     return false;    
 }
+
+void BurgerShack::printNumBurgersServedPerDay()
+{
+    std::cout << "The first burger shack serves " << this->numBurgersServedPerDay << " burgers each day.\n";
+}
+
+void BurgerShack::printIsItTimeToCleanTheGreaseTrap(int cleaningThreshold, int numDaysElapsed)
+{
+    std::cout << "Is it time to clean the grease trap?\n" << (this->isItTimeToCleanTheGreaseTrap(cleaningThreshold, numDaysElapsed) ? "YES" : "NO") << ": it has been " << this->daysSinceGreaseTrapCleaned << " days.\n";
+}
+
 
 // Customer implementations
 BurgerShack::Customer::Customer() : customerNumber(27)
@@ -217,8 +223,9 @@ struct FishingTrawler
     void pullInNet(int netId);
     void turnToPort(int degrees);
     void cleanBarnaclesFromHull(bool inDrydock);
-
     void setSailForNumDays(int numDaysToSailFor, float amountFuelUsedPerDay = 6.94f);
+
+    void printAmountOfGasRemaining();
 };
 
 FishingTrawler::FishingTrawler() : numFishingNets(5), numCrewMembers(4), amountOfFishCaughtPerDay(323.4f)
@@ -282,6 +289,11 @@ void FishingTrawler::setSailForNumDays(int numDaysToSailFor, float amountFuelUse
     std::cout << "In total, caught " << totalNumFishCaught << "lbs of fish.\n";
 }
 
+void FishingTrawler::printAmountOfGasRemaining()
+{
+    std::cout << "The second trawler has " << this->amountOfGasRemaining << " gallons of fuel remaining.\n";
+}
+
 
 
 /*
@@ -298,8 +310,10 @@ struct SteamLocomotive
     void detachFromCurrentTrainCar(bool warnCrew);
     void addCoalToFurnace(float lbsCoalToAdd);
     void slamOnTheBrakes(int delayTime);
-
     void removeCarsFromTrain(int numCarsToRemove);
+    
+    void printAge();
+    void printNumCarsOnTrain();
 };
 
 SteamLocomotive::SteamLocomotive() : numCarsOnTrain(15), age(25)
@@ -350,6 +364,16 @@ void SteamLocomotive::removeCarsFromTrain(int numCarsToRemove)
     }
 }
 
+void SteamLocomotive::printAge()
+{
+    std::cout << "The Local Service is " << this->age << " years old.\n";
+}
+
+void SteamLocomotive::printNumCarsOnTrain()
+{
+    std::cout << "There are " << this->numCarsOnTrain << " cars on this train.\n";
+}
+
 
 
 /*
@@ -367,6 +391,7 @@ struct BurgerChain
 
     float tallyWeeklyProfits();
     void addNewToppingOption(int numToppingsToAdd);
+    void printTallyWeeklyProfits();
 };
 
 BurgerChain::BurgerChain()
@@ -404,6 +429,13 @@ void BurgerChain::addNewToppingOption(int numToppingsToAdd = 1)
     std::cout << "Updated number of toppings available to " << franchisedBurgerShack1.numToppingOptions << std::endl;
 }
 
+void BurgerChain::printTallyWeeklyProfits()
+{
+    std::cout << "Total weekly profit of this Burger Chain is: $" << this->tallyWeeklyProfits() << std::endl;
+}
+
+
+
 /*
  new UDT 5:
  with 2 member functions
@@ -419,6 +451,8 @@ struct FishingFleet
 
     float calculateTotalWeeklyFishCaughtAmount();
     void sailFleet(int numDaysToSailFor);
+
+    void printCalculateTotalWeeklyFishCaughtAmount();
 };
 
 FishingFleet::FishingFleet()
@@ -467,6 +501,13 @@ void FishingFleet::sailFleet(int numDaysToSailFor)
     std::cout << trawler3.amountOfGasRemaining << " gallons of fuel remaining.\n\n";
 }
 
+void FishingFleet::printCalculateTotalWeeklyFishCaughtAmount()
+{
+    std::cout << "Total amount of fish caught per week: " << this->calculateTotalWeeklyFishCaughtAmount() << "lbs.\n";
+}
+
+
+
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
 
@@ -514,21 +555,28 @@ int main()
     // print member variables/return values
     std::cout << "TASK 3.3-5\n";
     std::cout << "The first burger shack serves " << firstBurgerShack.numBurgersServedPerDay << " burgers each day.\n"; 
+    firstBurgerShack.printNumBurgersServedPerDay();
     printDivider();
     std::cout << "The second trawler has " << trawler2.amountOfGasRemaining << " gallons of fuel remaining.\n";
+    trawler2.printAmountOfGasRemaining();
     printDivider();
     std::cout << "The Local Service is " << localService.age << " years old.\n";
+    localService.printAge();
     printDivider();
     
     // calls to looping member functions
     std::cout << "TASK 3.5-4\n";
     std::cout << "Is it time to clean the grease trap?\n" << (firstBurgerShack.isItTimeToCleanTheGreaseTrap(6, 5) ? "YES" : "NO") << ": it has been " << firstBurgerShack.daysSinceGreaseTrapCleaned << " days.\n";
+    firstBurgerShack.printIsItTimeToCleanTheGreaseTrap(6, 5);
+
     printDivider();
     trawler2.setSailForNumDays(5);
     std::cout << "Fuel remaining: " << trawler2.amountOfGasRemaining << " gallons.\n";
+    trawler2.printAmountOfGasRemaining();
     printDivider();
     localService.removeCarsFromTrain(5);
     std::cout << "There are " << localService.numCarsOnTrain << " cars on this train.\n";
+    localService.printNumCarsOnTrain();
     printDivider(3);
 
     /*
@@ -537,11 +585,13 @@ int main()
     std::cout << "TASK 5.1-7\n";
     BurgerChain familyBurger;
     std::cout << "Total weekly profit of this Burger Chain is: $" << familyBurger.tallyWeeklyProfits() << std::endl;
+    familyBurger.printTallyWeeklyProfits();
     familyBurger.addNewToppingOption(3);
     printDivider();
 
     FishingFleet pacificCatch;
     std::cout << "Total amount of fish caught per week: " << pacificCatch.calculateTotalWeeklyFishCaughtAmount() << "lbs.\n";
+    pacificCatch.printCalculateTotalWeeklyFishCaughtAmount();
     pacificCatch.sailFleet(4);
 
     printDivider();
