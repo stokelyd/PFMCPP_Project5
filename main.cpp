@@ -50,6 +50,7 @@ You don't have to do this, you can keep your current object name and just change
 
 
 #include <iostream>
+#include "LeakedObjectDetector.h"
 
 /*
  copied UDT 1:
@@ -86,6 +87,8 @@ struct BurgerShack
     void printIsItTimeToCleanTheGreaseTrap(int cleaningThreshold, int numDaysElapsed = 7);
 
     Customer nextCustomerInLine;
+
+    JUCE_LEAK_DETECTOR(BurgerShack)
 };
 
 // BurgerShack implementations
@@ -188,6 +191,18 @@ void BurgerShack::Customer::getExtraNapkins(int numNapkins)
 }
 
 
+struct BurgerShackWrapper
+{
+    BurgerShackWrapper( BurgerShack* ptr ) : pointerToBurgerShack( ptr ) { }
+    ~BurgerShackWrapper()
+    {
+        delete pointerToBurgerShack;
+    }
+
+    BurgerShack* pointerToBurgerShack = nullptr;
+};
+
+
 
 /*
  copied UDT 2:
@@ -207,6 +222,8 @@ struct FishingTrawler
     void setSailForNumDays(int numDaysToSailFor, float amountFuelUsedPerDay = 6.94f);
 
     void printAmountOfGasRemaining();
+
+    JUCE_LEAK_DETECTOR(FishingTrawler)
 };
 
 FishingTrawler::FishingTrawler() : numFishingNets(5), numCrewMembers(4), amountOfFishCaughtPerDay(323.4f)
@@ -276,6 +293,18 @@ void FishingTrawler::printAmountOfGasRemaining()
 }
 
 
+struct FishingTrawlerWrapper
+{
+    FishingTrawlerWrapper( FishingTrawler* ptr ) : pointerToFishingTrawler(ptr) { }
+    ~FishingTrawlerWrapper()
+    {
+        delete pointerToFishingTrawler;
+    }
+
+    FishingTrawler* pointerToFishingTrawler = nullptr;
+};
+
+
 
 /*
  copied UDT 3:
@@ -295,6 +324,8 @@ struct SteamLocomotive
     
     void printAge();
     void printNumCarsOnTrain();
+
+    JUCE_LEAK_DETECTOR(SteamLocomotive)
 };
 
 SteamLocomotive::SteamLocomotive() : numCarsOnTrain(15), age(25)
@@ -356,6 +387,18 @@ void SteamLocomotive::printNumCarsOnTrain()
 }
 
 
+struct SteamLocomotiveWrapper
+{
+    SteamLocomotiveWrapper( SteamLocomotive* ptr ) : pointerToSteamLocomotive( ptr ) { }
+    ~SteamLocomotiveWrapper()
+    {
+        delete pointerToSteamLocomotive;
+    }
+
+    SteamLocomotive* pointerToSteamLocomotive = nullptr;
+};
+
+
 
 /*
  new UDT 4:
@@ -373,6 +416,8 @@ struct BurgerChain
     float tallyWeeklyProfits();
     void addNewToppingOption(int numToppingsToAdd);
     void printTallyWeeklyProfits();
+
+    JUCE_LEAK_DETECTOR(BurgerChain)
 };
 
 BurgerChain::BurgerChain()
@@ -416,6 +461,18 @@ void BurgerChain::printTallyWeeklyProfits()
 }
 
 
+struct BurgerChainWrapper
+{
+    BurgerChainWrapper( BurgerChain* ptr ) : pointerToBurgerChain( ptr ) { }
+    ~BurgerChainWrapper()
+    {
+        delete pointerToBurgerChain;
+    }
+
+    BurgerChain* pointerToBurgerChain = nullptr;
+};
+
+
 
 /*
  new UDT 5:
@@ -434,6 +491,8 @@ struct FishingFleet
     void sailFleet(int numDaysToSailFor);
 
     void printCalculateTotalWeeklyFishCaughtAmount();
+
+    JUCE_LEAK_DETECTOR(FishingFleet)
 };
 
 FishingFleet::FishingFleet()
@@ -488,6 +547,18 @@ void FishingFleet::printCalculateTotalWeeklyFishCaughtAmount()
 }
 
 
+struct FishingFleetWrapper
+{
+    FishingFleetWrapper( FishingFleet* ptr ) : pointerToFishingFleet( ptr ) { }
+    ~FishingFleetWrapper()
+    {
+        delete pointerToFishingFleet;
+    }
+
+    FishingFleet* pointerToFishingFleet = nullptr;
+};
+
+
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
@@ -504,6 +575,7 @@ void FishingFleet::printCalculateTotalWeeklyFishCaughtAmount()
  */
 
 #include <iostream>
+
 void printDivider(int numToPrint = 1)
 {
     for (int i = 0; i < numToPrint; ++i)
@@ -515,65 +587,61 @@ void printDivider(int numToPrint = 1)
 int main()
 {
     /*
-     Task 5.1-6: UDT instantiations from Project 3
+     Task 5.3-5: instantiate and call UDTs using wrapper classes
     */
-    BurgerShack firstBurgerShack;
-    BurgerShack secondBurgerShack;
-    FishingTrawler trawler1;
-    FishingTrawler trawler2;
-    SteamLocomotive transCanada;
-    SteamLocomotive localService;
+    BurgerShackWrapper firstBurgerShack( new BurgerShack() );
+    BurgerShackWrapper secondBurgerShack( new BurgerShack() );
+    FishingTrawlerWrapper trawler1( new FishingTrawler() );
+    FishingTrawlerWrapper trawler2( new FishingTrawler() );
+    SteamLocomotiveWrapper transCanada( new SteamLocomotive() );
+    SteamLocomotiveWrapper localService( new SteamLocomotive() );
+    BurgerChainWrapper familyBurger( new BurgerChain() );
+    FishingFleetWrapper pacificCatch( new FishingFleet() );
 
     // calling member functions
     std::cout << "TASK 3.3-4\n";
-    firstBurgerShack.cleanGrill(true);
+    firstBurgerShack.pointerToBurgerShack->cleanGrill(true);
     printDivider();
-    trawler1.pullInNet(4);
+    trawler1.pointerToFishingTrawler->pullInNet(4);
     printDivider();
-    localService.addCoalToFurnace(32.3f);
+    localService.pointerToSteamLocomotive->addCoalToFurnace(32.3f);
     printDivider();
 
     // print member variables/return values
     std::cout << "TASK 3.3-5\n";
-    std::cout << "The first burger shack serves " << firstBurgerShack.numBurgersServedPerDay << " burgers each day.\n"; 
-    firstBurgerShack.printNumBurgersServedPerDay();
+    std::cout << "The first burger shack serves " << firstBurgerShack.pointerToBurgerShack->numBurgersServedPerDay << " burgers each day.\n"; 
+    firstBurgerShack.pointerToBurgerShack->printNumBurgersServedPerDay();
     printDivider();
-    std::cout << "The second trawler has " << trawler2.amountOfGasRemaining << " gallons of fuel remaining.\n";
-    trawler2.printAmountOfGasRemaining();
+    std::cout << "The second trawler has " << trawler2.pointerToFishingTrawler->amountOfGasRemaining << " gallons of fuel remaining.\n";
+    trawler2.pointerToFishingTrawler->printAmountOfGasRemaining();
     printDivider();
-    std::cout << "The Local Service is " << localService.age << " years old.\n";
-    localService.printAge();
+    std::cout << "The Local Service is " << localService.pointerToSteamLocomotive->age << " years old.\n";
+    localService.pointerToSteamLocomotive->printAge();
     printDivider();
     
     // calls to looping member functions
     std::cout << "TASK 3.5-4\n";
-    std::cout << "Is it time to clean the grease trap?\n" << (firstBurgerShack.isItTimeToCleanTheGreaseTrap(6, 5) ? "YES" : "NO") << ": it has been " << firstBurgerShack.daysSinceGreaseTrapCleaned << " days.\n";
-    firstBurgerShack.printIsItTimeToCleanTheGreaseTrap(6, 5);
-
+    std::cout << "Is it time to clean the grease trap?\n" << (firstBurgerShack.pointerToBurgerShack->isItTimeToCleanTheGreaseTrap(6, 5) ? "YES" : "NO") << ": it has been " << firstBurgerShack.pointerToBurgerShack->daysSinceGreaseTrapCleaned << " days.\n";
+    firstBurgerShack.pointerToBurgerShack->printIsItTimeToCleanTheGreaseTrap(6, 5);
     printDivider();
-    trawler2.setSailForNumDays(5);
-    std::cout << "Fuel remaining: " << trawler2.amountOfGasRemaining << " gallons.\n";
-    trawler2.printAmountOfGasRemaining();
+    trawler2.pointerToFishingTrawler->setSailForNumDays(5);
+    std::cout << "Fuel remaining: " << trawler2.pointerToFishingTrawler->amountOfGasRemaining << " gallons.\n";
+    trawler2.pointerToFishingTrawler->printAmountOfGasRemaining();
     printDivider();
-    localService.removeCarsFromTrain(5);
-    std::cout << "There are " << localService.numCarsOnTrain << " cars on this train.\n";
-    localService.printNumCarsOnTrain();
+    localService.pointerToSteamLocomotive->removeCarsFromTrain(5);
+    std::cout << "There are " << localService.pointerToSteamLocomotive->numCarsOnTrain << " cars on this train.\n";
+    localService.pointerToSteamLocomotive->printNumCarsOnTrain();
     printDivider(3);
 
-    /*
-     Task 5.1-7: Instantiate new UDTs and call member functions
-    */
     std::cout << "TASK 5.1-7\n";
-    BurgerChain familyBurger;
-    std::cout << "Total weekly profit of this Burger Chain is: $" << familyBurger.tallyWeeklyProfits() << std::endl;
-    familyBurger.printTallyWeeklyProfits();
-    familyBurger.addNewToppingOption(3);
+    std::cout << "Total weekly profit of this Burger Chain is: $" << familyBurger.pointerToBurgerChain->tallyWeeklyProfits() << std::endl;
+    familyBurger.pointerToBurgerChain->printTallyWeeklyProfits();
+    familyBurger.pointerToBurgerChain->addNewToppingOption(3);
     printDivider();
 
-    FishingFleet pacificCatch;
-    std::cout << "Total amount of fish caught per week: " << pacificCatch.calculateTotalWeeklyFishCaughtAmount() << "lbs.\n";
-    pacificCatch.printCalculateTotalWeeklyFishCaughtAmount();
-    pacificCatch.sailFleet(4);
+    std::cout << "Total amount of fish caught per week: " << pacificCatch.pointerToFishingFleet->calculateTotalWeeklyFishCaughtAmount() << "lbs.\n";
+    pacificCatch.pointerToFishingFleet->printCalculateTotalWeeklyFishCaughtAmount();
+    pacificCatch.pointerToFishingFleet->sailFleet(4);
 
     printDivider();
     std::cout << "good to go!" << std::endl;
