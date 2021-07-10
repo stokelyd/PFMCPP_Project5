@@ -598,61 +598,50 @@ int main()
     BurgerChainWrapper familyBurger( new BurgerChain() );
     FishingFleetWrapper pacificCatch( new FishingFleet() );
 
-
-    // std::cout << "The first burger shack serves " << firstBurgerShack.pointerToBurgerShack->numBurgersServedPerDay << " burgers each day.\n"; 
-    // std::cout << "The first burger shack serves " << firstBurgerShack.numBurgersServedPerDay << " burgers each day.\n"; 
-    // firstBurgerShack.printNumBurgersServedPerDay();
-
     // calling member functions
-    // std::cout << "TASK 3.3-4\n";
-    // firstBurgerShack.cleanGrill(true);
-    // printDivider();
-    // trawler1.pullInNet(4);
-    // printDivider();
-    // localService.addCoalToFurnace(32.3f);
-    // printDivider();
+    std::cout << "TASK 3.3-4\n";
+    firstBurgerShack.pointerToBurgerShack->cleanGrill(true);
+    printDivider();
+    trawler1.pointerToFishingTrawler->pullInNet(4);
+    printDivider();
+    localService.pointerToSteamLocomotive->addCoalToFurnace(32.3f);
+    printDivider();
 
     // print member variables/return values
-    // std::cout << "TASK 3.3-5\n";
-    // std::cout << "The first burger shack serves " << firstBurgerShack.numBurgersServedPerDay << " burgers each day.\n"; 
-    // firstBurgerShack.printNumBurgersServedPerDay();
-    // printDivider();
-    // std::cout << "The second trawler has " << trawler2.amountOfGasRemaining << " gallons of fuel remaining.\n";
-    // trawler2.printAmountOfGasRemaining();
-    // printDivider();
-    // std::cout << "The Local Service is " << localService.age << " years old.\n";
-    // localService.printAge();
-    // printDivider();
+    std::cout << "TASK 3.3-5\n";
+    std::cout << "The first burger shack serves " << firstBurgerShack.pointerToBurgerShack->numBurgersServedPerDay << " burgers each day.\n"; 
+    firstBurgerShack.pointerToBurgerShack->printNumBurgersServedPerDay();
+    printDivider();
+    std::cout << "The second trawler has " << trawler2.pointerToFishingTrawler->amountOfGasRemaining << " gallons of fuel remaining.\n";
+    trawler2.pointerToFishingTrawler->printAmountOfGasRemaining();
+    printDivider();
+    std::cout << "The Local Service is " << localService.pointerToSteamLocomotive->age << " years old.\n";
+    localService.pointerToSteamLocomotive->printAge();
+    printDivider();
     
     // calls to looping member functions
-    // std::cout << "TASK 3.5-4\n";
-    // std::cout << "Is it time to clean the grease trap?\n" << (firstBurgerShack.isItTimeToCleanTheGreaseTrap(6, 5) ? "YES" : "NO") << ": it has been " << firstBurgerShack.daysSinceGreaseTrapCleaned << " days.\n";
-    // firstBurgerShack.printIsItTimeToCleanTheGreaseTrap(6, 5);
+    std::cout << "TASK 3.5-4\n";
+    std::cout << "Is it time to clean the grease trap?\n" << (firstBurgerShack.pointerToBurgerShack->isItTimeToCleanTheGreaseTrap(6, 5) ? "YES" : "NO") << ": it has been " << firstBurgerShack.pointerToBurgerShack->daysSinceGreaseTrapCleaned << " days.\n";
+    firstBurgerShack.pointerToBurgerShack->printIsItTimeToCleanTheGreaseTrap(6, 5);
+    printDivider();
+    trawler2.pointerToFishingTrawler->setSailForNumDays(5);
+    std::cout << "Fuel remaining: " << trawler2.pointerToFishingTrawler->amountOfGasRemaining << " gallons.\n";
+    trawler2.pointerToFishingTrawler->printAmountOfGasRemaining();
+    printDivider();
+    localService.pointerToSteamLocomotive->removeCarsFromTrain(5);
+    std::cout << "There are " << localService.pointerToSteamLocomotive->numCarsOnTrain << " cars on this train.\n";
+    localService.pointerToSteamLocomotive->printNumCarsOnTrain();
+    printDivider(3);
 
-    // printDivider();
-    // trawler2.setSailForNumDays(5);
-    // std::cout << "Fuel remaining: " << trawler2.amountOfGasRemaining << " gallons.\n";
-    // trawler2.printAmountOfGasRemaining();
-    // printDivider();
-    // localService.removeCarsFromTrain(5);
-    // std::cout << "There are " << localService.numCarsOnTrain << " cars on this train.\n";
-    // localService.printNumCarsOnTrain();
-    // printDivider(3);
+    std::cout << "TASK 5.1-7\n";
+    std::cout << "Total weekly profit of this Burger Chain is: $" << familyBurger.pointerToBurgerChain->tallyWeeklyProfits() << std::endl;
+    familyBurger.pointerToBurgerChain->printTallyWeeklyProfits();
+    familyBurger.pointerToBurgerChain->addNewToppingOption(3);
+    printDivider();
 
-    /*
-     Task 5.1-7: Instantiate new UDTs and call member functions
-    */
-    // std::cout << "TASK 5.1-7\n";
-    // BurgerChain familyBurger;
-    // std::cout << "Total weekly profit of this Burger Chain is: $" << familyBurger.tallyWeeklyProfits() << std::endl;
-    // familyBurger.printTallyWeeklyProfits();
-    // familyBurger.addNewToppingOption(3);
-    // printDivider();
-
-    // FishingFleet pacificCatch;
-    // std::cout << "Total amount of fish caught per week: " << pacificCatch.calculateTotalWeeklyFishCaughtAmount() << "lbs.\n";
-    // pacificCatch.printCalculateTotalWeeklyFishCaughtAmount();
-    // pacificCatch.sailFleet(4);
+    std::cout << "Total amount of fish caught per week: " << pacificCatch.pointerToFishingFleet->calculateTotalWeeklyFishCaughtAmount() << "lbs.\n";
+    pacificCatch.pointerToFishingFleet->printCalculateTotalWeeklyFishCaughtAmount();
+    pacificCatch.pointerToFishingFleet->sailFleet(4);
 
     printDivider();
     std::cout << "good to go!" << std::endl;
