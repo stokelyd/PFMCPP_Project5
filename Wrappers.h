@@ -1,10 +1,10 @@
 #pragma once
 
-struct BurgerShack;
-struct FishingTrawler;
-struct SteamLocomotive;
-struct BurgerChain;
-struct FishingFleet;
+#include "BurgerShack.h"
+#include "FishingTrawler.h"
+#include "SteamLocomotive.h"
+#include "BurgerChain.h"
+#include "FishingFleet.h"
 
 struct BurgerShackWrapper
 {

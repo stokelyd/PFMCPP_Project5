@@ -1,12 +1,5 @@
 #include "Wrappers.h"
 
-#include "BurgerShack.h"
-#include "FishingTrawler.h"
-#include "SteamLocomotive.h"
-#include "BurgerChain.h"
-#include "FishingFleet.h"
-
-
 /*
  BurgerShackWrapper
 */
