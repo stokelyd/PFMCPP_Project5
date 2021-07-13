@@ -1,11 +1,17 @@
 #pragma once
 
-#include "BurgerShack.h"
-#include "FishingTrawler.h"
-#include "SteamLocomotive.h"
-#include "BurgerChain.h"
-#include "FishingFleet.h"
+/*
+ Forward Declarations
+*/
+struct BurgerShack;
+struct FishingTrawler;
+struct SteamLocomotive;
+struct BurgerChain;
+struct FishingFleet;
 
+/*
+ Wrapper Declarations
+*/
 struct BurgerShackWrapper
 {
     BurgerShackWrapper( BurgerShack* ptr );

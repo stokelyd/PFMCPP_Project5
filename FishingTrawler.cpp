@@ -1,6 +1,6 @@
 #include "FishingTrawler.h"
 
-FishingTrawler::FishingTrawler() : numFishingNets(5), numCrewMembers(4), amountOfFishCaughtPerDay(323.4f)
+FishingTrawler::FishingTrawler() : FishingTrawler(5, 4, 323.4f)
 {
     amountOfGasRemaining = 25.4f;
     distanceTraveledPerWeek = 134.3f;

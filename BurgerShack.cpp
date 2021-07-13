@@ -1,7 +1,6 @@
 #include "BurgerShack.h"
 
-BurgerShack::BurgerShack() : 
-numBurgersServedPerDay(576), numToppingOptions(12), profitPerWeek(745.32f), beefUsedPerWeek(47.5f)
+BurgerShack::BurgerShack() : BurgerShack(576, 745.32f, 47.5f)
 {
     daysSinceGreaseTrapCleaned = 2;
 }
