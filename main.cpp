@@ -31,8 +31,6 @@
  */
 
 
-
-
 #include <iostream>
 #include "LeakedObjectDetector.h"
 
@@ -77,8 +75,8 @@ int main()
     FishingTrawlerWrapper trawler2( new FishingTrawler() );
     SteamLocomotiveWrapper transCanada( new SteamLocomotive() );
     SteamLocomotiveWrapper localService( new SteamLocomotive() );
-    // BurgerChainWrapper familyBurger( new BurgerChain() );
-    // FishingFleetWrapper pacificCatch( new FishingFleet() );
+    BurgerChainWrapper familyBurger( new BurgerChain() );
+    FishingFleetWrapper pacificCatch( new FishingFleet() );
 
     // calling member functions
     std::cout << "TASK 3.3-4\n";
@@ -115,15 +113,15 @@ int main()
     localService.pointerToSteamLocomotive->printNumCarsOnTrain();
     printDivider(3);
 
-    // std::cout << "TASK 5.1-7\n";
-    // std::cout << "Total weekly profit of this Burger Chain is: $" << familyBurger.pointerToBurgerChain->tallyWeeklyProfits() << std::endl;
-    // familyBurger.pointerToBurgerChain->printTallyWeeklyProfits();
-    // familyBurger.pointerToBurgerChain->addNewToppingOption(3);
-    // printDivider();
+    std::cout << "TASK 5.1-7\n";
+    std::cout << "Total weekly profit of this Burger Chain is: $" << familyBurger.pointerToBurgerChain->tallyWeeklyProfits() << std::endl;
+    familyBurger.pointerToBurgerChain->printTallyWeeklyProfits();
+    familyBurger.pointerToBurgerChain->addNewToppingOption(3);
+    printDivider();
 
-    // std::cout << "Total amount of fish caught per week: " << pacificCatch.pointerToFishingFleet->calculateTotalWeeklyFishCaughtAmount() << "lbs.\n";
-    // pacificCatch.pointerToFishingFleet->printCalculateTotalWeeklyFishCaughtAmount();
-    // pacificCatch.pointerToFishingFleet->sailFleet(4);
+    std::cout << "Total amount of fish caught per week: " << pacificCatch.pointerToFishingFleet->calculateTotalWeeklyFishCaughtAmount() << "lbs.\n";
+    pacificCatch.pointerToFishingFleet->printCalculateTotalWeeklyFishCaughtAmount();
+    pacificCatch.pointerToFishingFleet->sailFleet(4);
 
     printDivider();
     std::cout << "good to go!" << std::endl;

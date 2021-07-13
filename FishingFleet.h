@@ -4,8 +4,6 @@
 #include "LeakedObjectDetector.h"
 #include "FishingTrawler.h"
 
-// struct FishingTrawler;
-
 struct FishingFleet
 {
     FishingTrawler trawler1{ 4, 3, 294.2f };

@@ -3,7 +3,6 @@
 #include <iostream>
 #include "LeakedObjectDetector.h"
 #include "BurgerShack.h"
-// struct BurgerShack;
 
 struct BurgerChain
 {

@@ -1,5 +1,4 @@
 #include "FishingFleet.h"
-// #include "FishingTrawler.h"
 
 FishingFleet::FishingFleet()
 {

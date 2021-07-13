@@ -1,11 +1,5 @@
 #include "Wrappers.h"
 
-// struct BurgerShack;
-// struct FishingTrawler;
-// struct SteamLocomotive;
-// struct BurgerChain;
-// struct FishingFleet;
-
 #include "BurgerShack.h"
 #include "FishingTrawler.h"
 #include "SteamLocomotive.h"
@@ -26,6 +20,7 @@ BurgerShackWrapper::~BurgerShackWrapper()
     delete pointerToBurgerShack;
 }
 
+
 /*
  FishingTrawlerWrapper
 */
@@ -38,8 +33,6 @@ FishingTrawlerWrapper::~FishingTrawlerWrapper()
 {
     delete pointerToFishingTrawler;
 }
-
-// FishingTrawler* pointerToFishingTrawler = nullptr;
 
 
 /*
@@ -55,7 +48,6 @@ SteamLocomotiveWrapper::~SteamLocomotiveWrapper()
     delete pointerToSteamLocomotive;
 }
 
-// pointerToSteamLocomotive = nullptr;
 
 /*
  BurgerChainWrapper
@@ -70,7 +62,6 @@ BurgerChainWrapper::~BurgerChainWrapper()
     delete pointerToBurgerChain;
 }
 
-// // BurgerChain* pointerToBurgerChain = nullptr;
 
 // /*
 //  FishingFleetWrapper
@@ -85,5 +76,4 @@ FishingFleetWrapper::~FishingFleetWrapper()
     delete pointerToFishingFleet;
 }
 
-// FishingFleet* pointerToFishingFleet = nullptr;
 
